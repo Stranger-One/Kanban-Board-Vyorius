@@ -24,6 +24,8 @@ export default (io) => {
 
     // Create task
     socket.on("task:create", async (taskData) => {
+        console.log("task:create", taskData);
+        
       try {
         const newTask = new TaskModel(taskData);
         await newTask.save();
@@ -35,15 +37,18 @@ export default (io) => {
     });
 
     // Update task
-    socket.on("task:update", async (updatedTask) => {
+    socket.on("task:update", async (updatedTask, taskId) => {
+        console.log("task:update", updatedTask);
+
       try {
         const task = await TaskModel.findByIdAndUpdate(
-          updatedTask._id,
+          taskId,
           updatedTask,
           { new: true }
         );
+        const tasks = await TaskModel.find();
         if (task) {
-          io.emit("task:updated", task);
+          io.emit("task:updated", tasks);
         }
       } catch (error) {
         console.error("Error updating task:", error.message);

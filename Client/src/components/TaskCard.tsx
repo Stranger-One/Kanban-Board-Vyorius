@@ -6,9 +6,11 @@ import { socket } from "./KanbanBoard";
 const TaskCard = ({
   task,
   openTaskForm,
+  setUpdateTaskId,
 }: {
   task: Task;
   openTaskForm: () => void;
+  setUpdateTaskId: (id: string) => void;
 }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "TASK",
@@ -42,6 +44,7 @@ const TaskCard = ({
         <button
           onClick={() => {
             openTaskForm();
+            setUpdateTaskId(task._id)
           }}
           className="text-blue-500 hover:text-blue-700 text-sm font-medium cursor-pointer"
         >

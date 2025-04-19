@@ -10,6 +10,7 @@ export interface ColumnProps {
   tasks: Task[];
   onDropTask: (taskId: string, newStatus: string) => void;
   openTaskForm: () => void;
+  setUpdateTaskId: (id: string) => void;
 }
 
 export interface Attachment {
@@ -20,8 +21,7 @@ export interface Attachment {
 export interface TaskFormData {
   title: string;
   description?: string;
-  status: "To Do" | "In Progress" | "Done";
-  priority: "Low" | "Medium" | "High";
-  category: "Bug" | "Feature" | "Enhancement";
-  attachments: Attachment[];
+  priority: string;
+  category: string;
+//   attachments: Attachment[];
 }

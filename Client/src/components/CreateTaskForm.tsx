@@ -1,19 +1,35 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
-import { Attachment, TaskFormData } from "../types/types";
+import React, { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { TaskFormData } from "../types/types";
 import { socket } from "./KanbanBoard";
 
 const TaskForm: React.FC<{
   closeForm: () => void;
-}> = ({ closeForm }) => {
-
+  updateTaskId: string | null;
+  tasks: any[];
+}> = ({ closeForm, updateTaskId, tasks }) => {
   const [formData, setFormData] = useState<TaskFormData>({
     title: "",
     description: "",
-    status: "To Do",
     priority: "Medium",
     category: "Feature",
-    attachments: [],
+    // attachments: [],
   });
+
+  useEffect(() => {
+    if (updateTaskId) {
+      const task = tasks.find((task) => task._id === updateTaskId);
+      if (task) {
+        console.log(task);
+        setFormData({
+          title: task.title || "",
+          description: task.description || "",
+          priority: task.priority || "Medium",
+          category: task.category || "Feature",
+          // attachments: task.attachments || [],
+        });
+      }
+    }
+  }, [updateTaskId, tasks]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -22,27 +38,31 @@ const TaskForm: React.FC<{
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      const newAttachments: Attachment[] = Array.from(files).map((file) => ({
-        name: file.name,
-        url: URL.createObjectURL(file), // For preview; replace with uploaded URL if needed
-      }));
-      setFormData((prev) => ({ ...prev, attachments: newAttachments }));
-    }
-  };
+  // const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const files = e.target.files;
+  //   if (files) {
+  //     const newAttachments: Attachment[] = Array.from(files).map((file) => ({
+  //       name: file.name,
+  //       url: URL.createObjectURL(file), // For preview; replace with uploaded URL if needed
+  //     }));
+  //     setFormData((prev) => ({ ...prev, attachments: newAttachments }));
+  //   }
+  // };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    socket.emit("task:create", formData)
+    
+    if(updateTaskId){
+      socket.emit("task:update", formData, updateTaskId);
+    } else {
+      socket.emit("task:create", formData);
+    }
+
     setFormData({
       title: "",
       description: "",
-      status: "To Do",
       priority: "Medium",
       category: "Feature",
-      attachments: [],
     });
     closeForm();
   };
@@ -100,7 +120,7 @@ const TaskForm: React.FC<{
         </select>
       </div>
 
-      <div className="space-y-1">
+      {/* <div className="space-y-1">
         <label className="text-lg font-semibold">Attachments:</label>
         <input
           type="file"
@@ -108,10 +128,10 @@ const TaskForm: React.FC<{
           onChange={handleFileChange}
           className="w-full p-2 border rounded"
         />
-      </div>
+      </div> */}
 
       {/* Preview attachments */}
-      {formData.attachments.length > 0 && (
+      {/* {formData.attachments.length > 0 && (
         <div className="flex flex-wrap gap-2">
           {formData.attachments.map((file, index) => (
             <div
@@ -122,13 +142,13 @@ const TaskForm: React.FC<{
             </div>
           ))}
         </div>
-      )}
+      )} */}
 
       <button
         type="submit"
         className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
       >
-        Create Task
+        {updateTaskId ? "Update" : "Create"} Task
       </button>
     </form>
   );
