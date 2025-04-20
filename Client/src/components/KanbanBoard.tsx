@@ -7,7 +7,7 @@ import TaskForm from "./CreateTaskForm";
 import { ColumnProps, Task } from "../types/types";
 import toast from "react-hot-toast";
 import TaskProgressChart from "./TaskProgressChart";
-export const socket = io("http://localhost:5000");
+export const socket = io(import.meta.env.VITE_SERVER_BASE_URL);
 
 const columns = [
   { id: "To Do", title: "To Do" },

@@ -60,7 +60,7 @@ const TaskForm: React.FC<{
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/upload",
+        `${import.meta.env.VITE_SERVER_BASE_URL}/api/upload`,
         formData
       );
       console.log("Uploaded files:", response.data);
