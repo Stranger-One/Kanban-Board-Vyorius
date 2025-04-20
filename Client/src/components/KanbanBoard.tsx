@@ -22,7 +22,7 @@ const Column: React.FC<ColumnProps> = ({ column, tasks, onDropTask, openTaskForm
     drop: (item: { id: string }) => {
       const taskId = item.id;
       const newStatus = column.id;
-      console.log("Dropped task:", taskId, "to status:", newStatus);
+      // console.log("Dropped task:", taskId, "to status:", newStatus);
       onDropTask(taskId, newStatus);
     },
   });
@@ -48,7 +48,7 @@ const KanbanBoard: React.FC = () => {
   const [updateTaskId, setUpdateTaskId] = useState<string | null>(null)
 
   const handleSyncTasks = useCallback((data: Task[], message: string) => {
-    console.log(message, data);
+    // console.log(message, data);
     toast.success(`Tasks ${message} Successfully :)`);
     setUpdateTaskId(null)
     setTasks(data);

@@ -2,7 +2,7 @@ import TaskModel from "./models/TaskModel.js";
 
 export default (io) => {
   io.on("connection", async (socket) => {
-    console.log("New client connected", socket.id);
+    // console.log("New client connected", socket.id);
 
     // Sync all tasks on new connection
     try {
@@ -24,7 +24,7 @@ export default (io) => {
 
     // Create task
     socket.on("task:create", async (taskData) => {
-        console.log("task:create", taskData);
+        // console.log("task:create", taskData);
         
       try {
         const newTask = new TaskModel(taskData);
@@ -38,7 +38,7 @@ export default (io) => {
 
     // Update task
     socket.on("task:update", async (updatedTask, taskId) => {
-        console.log("task:update", updatedTask);
+        // console.log("task:update", updatedTask);
 
       try {
         const task = await TaskModel.findByIdAndUpdate(

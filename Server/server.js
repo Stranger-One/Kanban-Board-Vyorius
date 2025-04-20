@@ -28,7 +28,7 @@ const io = new Server(server, {
 socketHandler(io);
 
 app.post('/api/upload', upload.array('files', 10), async (req, res) => {
-  console.log("file uploads: ", req.files);
+  // console.log("file uploads: ", req.files);
 
   const files = req.files.map((file) => file.path);
   

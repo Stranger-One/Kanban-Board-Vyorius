@@ -38,7 +38,7 @@ const TaskForm: React.FC<{
     if (updateTaskId) {
       const task = tasks.find((task) => task._id === updateTaskId);
       if (task) {
-        console.log(task);
+        // console.log(task);
         setFormData({
           title: task.title || "",
           description: task.description || "",
@@ -63,7 +63,7 @@ const TaskForm: React.FC<{
         `${import.meta.env.VITE_SERVER_BASE_URL}/api/upload`,
         formData
       );
-      console.log("Uploaded files:", response.data);
+      // console.log("Uploaded files:", response.data);
 
       setUploadedfiles(response.data);
     } catch (error) {
@@ -110,7 +110,7 @@ const TaskForm: React.FC<{
       setFormData((prev) => ({ ...prev, attachments: newAttachments }));
 
       // upload file and get url
-      console.log(files);
+      // console.log(files);
       const filesToUpload = Array.from(files);
       uploadFiles(filesToUpload);
     }

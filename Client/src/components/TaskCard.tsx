@@ -28,7 +28,7 @@ const TaskCard = ({
     socket.emit("task:delete", task._id);
   };
 
-  console.log({ task });
+  // console.log({ task });
 
   return (
     <div

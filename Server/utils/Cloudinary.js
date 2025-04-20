@@ -9,11 +9,7 @@ const cloudName = process.env.CLOUDINARY_CLOUD_NAME
 const cloudApi = process.env.CLOUDINARY_API_KEY
 const cloudSecret = process.env.CLOUDINARY_SECRET_KEY
 
-console.log({
-    cloudName,
-    cloudApi,
-    cloudSecret
-});
+
 
 // Configure Cloudinary
 cloudinary.config({
@@ -30,7 +26,7 @@ const storage = new CloudinaryStorage({
     params: async (req, file) => {
         const project_folder = 'Kanban-Board';
 
-        console.log("file: ", file);
+        // console.log("file: ", file);
         
 
         const fileType = file.mimetype.split('/')[0];
