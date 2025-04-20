@@ -3,6 +3,9 @@ export interface Task {
   title: string;
   description?: string;
   status: string;
+  attachments: string[];
+  priority?: string;
+  category?: string
 }
 
 export interface ColumnProps {
@@ -16,6 +19,7 @@ export interface ColumnProps {
 export interface Attachment {
   name: string;
   url: string;
+  type: string;
 }
 
 export interface TaskFormData {
@@ -23,5 +27,6 @@ export interface TaskFormData {
   description?: string;
   priority: string;
   category: string;
-//   attachments: Attachment[];
+  attachments: Attachment[];
+  attachmentsPreview?: string[];
 }

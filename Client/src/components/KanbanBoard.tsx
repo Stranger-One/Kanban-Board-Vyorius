@@ -50,6 +50,7 @@ const KanbanBoard: React.FC = () => {
   const handleSyncTasks = useCallback((data: Task[], message: string) => {
     console.log(message, data);
     toast.success(`Tasks ${message} Successfully :)`);
+    setUpdateTaskId(null)
     setTasks(data);
   }, []);
 
@@ -80,7 +81,7 @@ const KanbanBoard: React.FC = () => {
   };
 
   return (
-    <div className="p-10 md:py-10 md:px-30 overflow-auto space-y-5">
+    <div className="p-5 lg:py-10 lg:px-30 overflow-auto space-y-5">
       <h1 className="text-3xl font-bold w-full text-center mb-10">
         Kanban Board
       </h1>
@@ -113,7 +114,10 @@ const KanbanBoard: React.FC = () => {
 
       <div className={`${openTaskForm ? "fixed" : "hidden"} bottom-0 left-0 right-0 p-4 bg-gray-400/50 shadow-lg w-full h-full flex flex-col items-center justify-center`}>
         <TaskForm
-          closeForm={() => setOpenTaskForm(false)}
+          closeForm={() => {
+            setOpenTaskForm(false)
+            setUpdateTaskId(null)
+          }}
           updateTaskId={updateTaskId}
           tasks={tasks}
         />

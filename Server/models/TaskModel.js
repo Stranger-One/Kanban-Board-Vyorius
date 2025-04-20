@@ -21,12 +21,7 @@ const TaskSchema = new Schema(
       enum: ["Bug", "Feature", "Enhancement"],
       default: "Feature",
     },
-    attachments: [
-      {
-        name: String,
-        url: String,
-      },
-    ],
+    attachments: [String],
   },
   {
     timestamps: true,
